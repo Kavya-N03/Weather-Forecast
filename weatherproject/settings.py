@@ -38,8 +38,8 @@ FORECAST_URL = config('FORECAST_URL')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =True
-ALLOWED_HOSTS = []
+DEBUG =False
+ALLOWED_HOSTS = ['*']
 
 
 
