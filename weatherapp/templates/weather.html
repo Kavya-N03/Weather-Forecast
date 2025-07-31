@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <script src="{% static 'js/script.js' %}"></script>
+    <title>Weather App</title>
+</head>
+<body>
+    <div class="container">
+
+
+        <!-- Weather form -->
+        <div class="weather-form">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <h1>weather forecast</h1>
+                <input type="text" name="city" placeholder="Enter City Name..." required/>
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+
+        <!-- Current weather -->
+        {% if city %}
+        <div class="weather-details">
+            <span id="weather-condition" style="display: none;">{{weather_condition}}</span>
+            <h2>Weather in {{ city }},{{country}}</h2>
+            <img src="{{ icon_url }}" alt="Icon" width="200px"/>
+            <h2>{{ description }}</h2>
+            <h2>{{ temperature }}°C</h2>
+            <h4>Humidity:{{ humidity }}%</h4>
+            <h4>Wind Speed:{{ wind }} km/h</h4>
+        </div>
+        {% endif %}
+
+        <br><br>
+        <hr>
+
+        <!-- 5-Day Forecast -->
+        {% if forecast %}
+        <h2>Forecast (Next 5 Days)</h2>
+        <div class="forecast-grid">
+            {% for item in forecast %}
+            <div class="forecast-card">
+                <h4>{{ item.date_time }}</h4>
+                <img src="{{ item.iconurl }}" alt="icon" width="100px"/>
+                <p>{{ item.desc }}</p>
+                <p>{{ item.temp }}°C</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Error / status messages -->
+        <div class="messages">
+            {% for message in messages %}
+            <h4>{{ message }}</h4>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
